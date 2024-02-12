@@ -15,7 +15,6 @@ import { HomeComponent } from "../home/home.component";
 import { DetailsComponent } from "../details/details.component";
 
 const routeConfig: Routes = [
-  //{path: '', component: , title: ''},
   { path: "", component: HomeComponent, title: "Home Page" },
   //Paramterized route
   { path: "details/:id", component: DetailsComponent, title: "Details Page" },
