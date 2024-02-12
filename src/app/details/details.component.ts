@@ -10,7 +10,29 @@ import { HousingService } from "../services/housing.service";
   standalone: true,
   imports: [CommonModule],
   template: `
-    <p>[Details Page] Housing Location ID: {{ housingLocation?.id }}</p>
+    <article>
+      <img [src]="housingLocation?.photo" alt="" class="listing-photo" />
+      <section class="listing-description">
+        <h2 class="listing-heading">{{ housingLocation?.name }}</h2>
+        <p class="listing-location">
+          {{ housingLocation?.city }}, {{ housingLocation?.state }}
+        </p>
+      </section>
+      <section class="listing-features">
+        <h2 class="section-heading">About this housing location</h2>
+        <ul>
+          <li>Units available: {{ housingLocation?.availableUnits }}</li>
+          <li>Does this location have wifi: {{ housingLocation?.wifi }}</li>
+          <li>
+            Does this location have laundry: {{ housingLocation?.laundry }}
+          </li>
+        </ul>
+      </section>
+      <section class="listing-apply">
+        <h2 class="section-heading">Interested in living here?</h2>
+        <button class="primary" type="button">Apply Now</button>
+      </section>
+    </article>
   `,
   styleUrls: ["./details.component.css"],
 })
