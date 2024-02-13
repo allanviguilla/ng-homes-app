@@ -81,7 +81,12 @@ export class DetailsComponent {
     //This code is retrieving the value of the "id" path parameter from the current route's
     //snapshot and saving it to housingLocationId
     const housingLocationId = Number(this.route.snapshot.params["id"]);
-    this.housingLocation =
-      this.housingService.getHousingLocationById(housingLocationId);
+    // this.housingLocation =
+    //   this.housingService.getHousingLocationById(housingLocationId);
+    this.housingService
+      .getHousingLocationById(housingLocationId)
+      .then((housingLocation) => {
+        this.housingLocation = housingLocation;
+      });
   }
 }

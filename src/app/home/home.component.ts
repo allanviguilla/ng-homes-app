@@ -13,9 +13,11 @@ import { HousingService } from "../services/housing.service";
   template: `
     <section>
       <form action="">
-        <input type="text" placeholder="Filter by city" /><button
+        <!-- A template variable # allows you to get an element in the template -->
+        <input type="text" placeholder="Filter by city" #filter /><button
           class="primary"
           type="button"
+          (click)="filterResults(filter.value)"
         >
           Search
         </button>
@@ -24,8 +26,12 @@ import { HousingService } from "../services/housing.service";
     <section class="results">
       <!-- Iterate through the housingLocationList to get each of the locations -->
       <!-- Each housingLocation component is a card with that housingLocation's data -->
-      <app-housing-location
+      <!-- <app-housing-location
         *ngFor="let housingLocation of housingLocationList"
+        [housingLocation]="housingLocation"
+      ></app-housing-location> -->
+      <app-housing-location
+        *ngFor="let housingLocation of filteredLocationList"
         [housingLocation]="housingLocation"
       ></app-housing-location>
     </section>
@@ -40,7 +46,24 @@ export class HomeComponent {
 
   housingService: HousingService = inject(HousingService);
 
+  filteredLocationList: HousingLocation[] = [];
+
   constructor() {
-    this.housingLocationList = this.housingService.getAllHousingLocations();
+    // this.housingLocationList = this.housingService.getAllHousingLocations();
+    this.housingService
+      .getAllHousingLocations()
+      .then((housingLocationList: HousingLocation[]) => {
+        this.housingLocationList = housingLocationList;
+        this.filteredLocationList = housingLocationList;
+      });
+  }
+
+  filterResults(text: string) {
+    if (!text) this.filteredLocationList = this.housingLocationList;
+
+    this.filteredLocationList = this.housingLocationList.filter(
+      (housingLocation) =>
+        housingLocation?.city.toLowerCase().includes(text.toLowerCase())
+    );
   }
 }
